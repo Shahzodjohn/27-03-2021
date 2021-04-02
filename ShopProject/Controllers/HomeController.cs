@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ShopProject.Context;
 using ShopProject.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +14,20 @@ namespace ShopProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,AppDbContext appDbContext)
         {
             _logger = logger;
+            this.context = appDbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string category)
         {
-            return View();
+            if (category == null)
+                return View(await context.Products.ToListAsync());
+            else
+                return View(await context.Products.Where(p => p.Categories.Name.Equals(category)).ToListAsync());
         }
 
         public IActionResult Privacy()

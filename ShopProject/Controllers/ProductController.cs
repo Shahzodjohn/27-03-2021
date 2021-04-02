@@ -35,8 +35,25 @@ namespace ShopProject.Controllers
             }
 
         }
-
-        public async Task<IActionResult> Create()
+        public async Task <IActionResult> Create()
+        {
+            ViewData["CategoryId"] = await _context.Categories.Select(p => new SelectListItem()
+            {
+               Text = p.Name,
+               Value = p.Id.ToString()
+           }).ToListAsync();
+            return View();
+            
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Edit(int? id)
         {
             ViewData["CategoryId"] = await _context.Categories.Select(p => new SelectListItem()
             {
@@ -47,36 +64,12 @@ namespace ShopProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product)
-        {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-        [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id != null)
-            {
-                Product product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
-                if (product != null)
-                
-                   return View(product);
-
-                
-                    
-            }
-            return NotFound();
-        }
-       
-        [HttpPost]
         public async Task<IActionResult> Edit(Product product)
         {
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id != null)
@@ -88,7 +81,11 @@ namespace ShopProject.Controllers
             }
             return NotFound();
         }
-       
+        
+
+
+
+        
 
 
     }
