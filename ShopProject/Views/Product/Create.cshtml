@@ -1,0 +1,37 @@
+﻿@model ShopProject.Models.Product
+@{
+    ViewData["Title"] = "Create";
+}
+<form asp-action="create" asp-controller="Product">
+
+    <div class="form-group">
+        <label asp-for="Shop" >Shop</label>
+        <input type="text" class="form-control"asp-for="Shop" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ProductName">ProductName</label>
+        <input type="text" class="form-control" asp-for="ProductName" />
+    </div>
+    <div class="form-group">
+        <span class="input-group-text">TJS</span>
+        <label asp-for="Price">Price</label>
+        <input type="text" class="form-control" asp-for="Price" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="form-group"></label>
+        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="InsertDate">InsertDate</label>
+        <input type="text" class="form-control" asp-for="InsertDate" />
+    </div>
+    <div class="form-group">
+        <label asp-for="UpdateDate">UpdateDate</label>
+        <input type="text" class="form-control" asp-for="UpdateDate" />
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" value="Нажать" class="btn btn-success" />
+    </div>
+</form>

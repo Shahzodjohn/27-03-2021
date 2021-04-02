@@ -1,0 +1,14 @@
+﻿@model  ShopProject.Models.Category
+@{
+    ViewBag.Title = "Создание объектов";
+}
+<form asp-action="create" asp-controller="category">
+    
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input type="text" asp-for="Name" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Нажать" class="btn btn-success" />
+    </div>
+</form>
